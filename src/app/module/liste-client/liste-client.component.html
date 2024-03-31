@@ -1,0 +1,175 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <button (click)="open(content)" class=" pull-right" mat-fab extended color="warn">
+          <mat-icon>person_add</mat-icon>
+          Ajouter Utilisateur
+        </button>
+      </div>
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title ">Liste Des Utilisateus</h4>
+            <p class="card-category">Utilisateus Active Dans Le Systeme</p>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead class=" text-primary">
+                <th>
+                  ID
+                </th>
+                <th>
+                  Nom Complet
+                </th>
+                <th>
+                  Username
+                </th>
+                <th>
+                  Email
+                </th>
+                <th>
+                  Status
+                </th>
+                <th>
+                  Date Creation
+                </th>
+                <th >
+                  Action
+                </th>
+                </thead>
+                <tbody>
+                  @for (user of  users; track  $index){
+                  <tr>
+                    <td>
+                      {{user.id }}
+                    </td>
+                    <td>
+                      {{ user.name }}
+                    </td>
+                    <td>
+                      {{ user.username }}
+                    </td>
+                    <td>
+                      {{ user.email }}
+                    </td>
+                    <td >
+                      {{ user.enabled }}
+                    </td>
+                    <td>
+                      {{ user.dateCreated | date:'d MMMM, y' }}
+                    </td>
+                    <td class="example-button-row">
+                      <button (click)="open(content, user)" mat-fab extended color="accent">
+                        <mat-icon>edit</mat-icon>
+                        modifier
+                      </button>
+                      <button mat-fab extended color="primary">
+                        <mat-icon>block</mat-icon>
+                        desactiver
+                      </button>
+                    </td>
+                  }
+                </tbody>
+              </table>
+              <mat-paginator [length]="totalPages"
+                             [pageSize]="size"
+                             [pageIndex]="page"
+                             (page)="handlePaginationItemPerItemps($event)"
+                             [pageSizeOptions]="[3,5, 10, 25,50, 100]"
+                             aria-label="">
+              </mat-paginator>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{ title }}</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form class="form">
+      <div class="form-body" [formGroup]="userForm">
+        <div class="row align-items-center">
+          <div class="col-12 form-group" >
+            <label class="form-label">Nom Complet<span class="text-danger">*</span> </label>
+            <input formControlName="name"  type="text"  class="form-control"
+                   [ngClass]="{
+                              'is-invalid':
+                                userForm.get('name')?.touched &&
+                                !userForm.get('name')?.valid
+                            }"/>
+            <div class="invalid-feedback">
+                            <span *ngIf="userForm.get('name')?.hasError('required')">
+                              Entrez le nom de l'utilisateur
+                            </span>
+
+            </div>
+          </div>
+          <div class="col-12 form-group" >
+            <label class="form-label">Username<span class="text-danger">*</span> </label>
+            <input formControlName="username"  type="text"  class="form-control"
+                   [ngClass]="{
+                              'is-invalid':
+                                userForm.get('username')?.touched &&
+                                !userForm.get('username')?.valid
+                            }"/>
+            <div class="invalid-feedback">
+                            <span *ngIf="userForm.get('username')?.hasError('required')">
+                              Entrez le username de l'utilisateur
+                            </span>
+
+            </div>
+          </div>
+          <div class="col-12 form-group" >
+            <label class="form-label">Email<span class="text-danger">*</span> </label>
+            <input formControlName="email" type="email"  class="form-control"
+                   [ngClass]="{
+                              'is-invalid':
+                                userForm.get('email')?.touched &&
+                                !userForm.get('email')?.valid
+                            }"/>
+            <div class="invalid-feedback">
+                            <span *ngIf="userForm.get('email')?.hasError('required')">
+                              Entrez le email de l'utilisateur
+                            </span>
+
+            </div>
+          </div>
+          @if (title === 'Ajouter un client'){
+            <div class="col-12 form-group" >
+              <label class="form-label">Mot De passe<span class="text-danger">*</span> </label>
+              <input formControlName="password" type="password"  class="form-control"
+                     [ngClass]="{
+                              'is-invalid':
+                                userForm.get('password')?.touched &&
+                                !userForm.get('password')?.valid
+                            }"/>
+              <div class="invalid-feedback">
+                            <span *ngIf="userForm.get('password')?.hasError('required')">
+                              Entrez le mot de passe de l'utilisateur
+                            </span>
+
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    @if (title === 'Ajouter un client')
+    {
+      <button type="button" class="btn btn-primary mx-50 bg-app-primary" (click)="modal.close('Save click')">Enregistrer</button>
+    } @else {
+      <button type="button" class="btn btn-primary mx-50 bg-app-primary" (click)="modal.close('Edit click')">Modifier</button>
+    }
+    <button type="button" class="btn btn-danger mx-50" (click)="modal.dismiss('Cancel click')">Annuler</button>
+  </div>
+</ng-template>

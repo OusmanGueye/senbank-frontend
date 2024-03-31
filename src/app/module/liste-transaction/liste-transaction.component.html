@@ -1,0 +1,79 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title ">Liste Des Utilisateus</h4>
+            <p class="card-category">Utilisateus Active Dans Le Systeme</p>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead class=" text-primary">
+                <th>
+                  ID
+                </th>
+                <th>
+                  Status
+                </th>
+                <th>
+                  Client Emetteur
+                </th>
+                <th>
+                  Client Recepteur
+                </th>
+                <th>
+                  Montant
+                </th>
+                <th>
+                  Date Creation
+                </th>
+                <th >
+                  Action
+                </th>
+                </thead>
+                <tbody>
+                  @for (transaction of  transactions; track  $index){
+                    <tr>
+                      <td>
+                        {{transaction.id }}
+                      </td>
+                      <td>
+                        {{ transaction.etatTransaction }}
+                      </td>
+                      <td>
+                        {{ transaction.compteEmetteur.user.name | uppercase }}
+                      </td>
+                      <td>
+                        {{ transaction.compteRecepteur.user.name | uppercase }}
+                      </td>
+                      <td >
+                        {{ transaction.montant }}
+                      </td>
+                      <td>
+                        {{ transaction.dateTransaction | date:'d MMMM, y' }}
+                      </td>
+                      <td class="example-button-row">
+                        <button mat-fab extended color="accent">
+                          <mat-icon>visibility</mat-icon>
+                          details
+                        </button>
+                      </td>
+                      }
+                </tbody>
+              </table>
+              <mat-paginator [length]="totalPages"
+                             [pageSize]="size"
+                             [pageIndex]="page"
+                             (page)="handlePaginationItemPerItemps($event)"
+                             [pageSizeOptions]="[3,5, 10, 25,50, 100]"
+                             aria-label="">
+              </mat-paginator>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

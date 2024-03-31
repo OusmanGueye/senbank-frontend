@@ -1,0 +1,119 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header card-header-tabs card-header-primary">
+        <div class="nav-tabs-navigation">
+          <div class="nav-tabs-wrapper">
+            <span class="nav-tabs-title">Comptes :</span>
+            <ul class="nav nav-tabs" data-tabs="tabs">
+              <li class="nav-item" *ngFor="let compte of comptes; let i = index">
+                <a mat-button class="nav-link" [class.active]="i === selectedTabIndex" (click)="selectedTabIndex = i" [href]=[compte.id] data-toggle="tab">
+                  <i class="material-icons">credit_card</i> {{ compte.typeDeCompte.nom  }}
+                  <div class="ripple-container"></div>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="tab-content">
+          <div class="tab-pane" *ngFor="let compte of comptes; let i = index" [class.active]="i === selectedTabIndex" [id]=[compte.id]>
+            <div class="row">
+              <div class="col-md-10">
+                <div class="card">
+                  <div class="card-header ">
+                    <h1 class="card-title">SOLDE : {{ compte.solde }}</h1>
+                    <p class="card-category">NUMERO : {{ compte.numero }}</p>
+                    <p class="card-category">TYPE : {{ compte.typeDeCompte.nom }}</p>
+                    <p class="card-category">DATE DE CREATION : {{ compte.dateCreated }}</p>
+                    <p class="card-category">ETAT : {{ compte.etatCompte }}</p>
+                    <p class="card-category">Frais Transaction : {{ compte.typeDeCompte.fraisTransaction }}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <button mat-raised-button class="m-1" color="primary" >Faire un depot</button>
+                <button mat-raised-button class="m-1" color="accent" >Faire un retrait</button>
+                <button mat-raised-button class="m-1" color="warn" (click)="openDialog(content, compte, true)" >Faire un virement</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{ titlte }}</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form class="form">
+      <div class="form-body" [formGroup]="compteForm">
+        <div class="row align-items-center">
+          <div class="col-12 form-group" >
+            <label class="form-label">Solde<span class="text-danger">*</span> </label>
+            <input readonly formControlName="solde" type="number"  class="form-control"
+                   [ngClass]="{
+                              'is-invalid':
+                                compteForm.get('solde')?.touched &&
+                                !compteForm.get('solde')?.valid
+                            }"/>
+            <div class="invalid-feedback">
+                            <span *ngIf="compteForm.get('solde')?.hasError('required')">
+                              Entrez le solde du compte
+                            </span>
+
+            </div>
+          </div>
+          @if  (titlte === 'Virement'){
+            <div class="col-12 form-group" >
+              <label class="form-label">Numero Compte<span class="text-danger">*</span> </label>
+              <input  formControlName="numeroCompte" type="text"  class="form-control"
+                     [ngClass]="{
+                              'is-invalid':
+                                compteForm.get('numeroCompte')?.touched &&
+                                !compteForm.get('numeroCompte')?.valid
+                            }"/>
+              <div class="invalid-feedback">
+                            <span *ngIf="compteForm.get('numeroCompte')?.hasError('required')">
+                              Entrez le numero du compte
+                            </span>
+
+              </div>
+            </div>
+          }
+            <div class="col-12 form-group" >
+              <label class="form-label">Montant<span class="text-danger">*</span> </label>
+              <input formControlName="montant" type="number"  class="form-control"
+                     [ngClass]="{
+                              'is-invalid':
+                                compteForm.get('montant')?.touched &&
+                                !compteForm.get('montant')?.valid
+                            }"/>
+              <div class="invalid-feedback">
+                            <span *ngIf="compteForm.get('montant')?.hasError('required')">
+                              Entrez le montant du dépot
+                            </span>
+
+              </div>
+            </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    @if (titlte === 'Virement')
+    {
+      <button type="button" class="btn btn-primary mx-50 bg-app-primary" (click)="modal.close('Save virement')">
+        Enregistrer
+      </button>
+    } @else {
+      <button type="button" class="btn btn-primary mx-50 bg-app-primary" (click)="modal.close('Edit click')">Modifier</button>
+    }
+    <button type="button" class="btn btn-danger mx-50" (click)="modal.dismiss('Cancel click')">Annuler</button>
+  </div>
+</ng-template>

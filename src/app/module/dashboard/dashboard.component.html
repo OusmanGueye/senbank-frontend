@@ -1,0 +1,145 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-header card-header-warning card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">people</i>
+            </div>
+            <p class="card-category">Total Client</p>
+            <h3 class="card-title">{{ stats?.totalClient }}
+
+            </h3>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="material-icons text-danger">visibility</i> <!-- Ajout d'une icône d'œil pour voir les détails -->
+              <a href="javascript:void(0)">Voir les détails</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-header card-header-success card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">account_balance</i>
+            </div>
+            <p class="card-category">Toatal Compte</p>
+            <h3 class="card-title">{{ stats?.totalCompte }}</h3>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="material-icons">swap_horiz</i>
+              <a href="javascript:void(0)">Voir les transactions</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-header card-header-danger card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">attach_money</i>
+            </div>
+            <p class="card-category">Solde Total Compte</p>
+            <h3 class="card-title">{{ stats?.totalSolde }}</h3>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="material-icons">trending_up</i>
+              <span>Augmentation de 23% </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card card-chart">
+          <div class="card-header card-header-success">
+            <div class="ct-chart" id="dailySalesChart"></div>
+          </div>
+          <div class="card-body">
+            <h4 class="card-title">Nombre de clients par jour</h4>
+            <p class="card-category">
+              <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> augmentation du nombre de clients
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="material-icons">access_time</i> mise à jour il y a 4 minutes
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card card-chart">
+          <div class="card-header card-header-warning">
+            <div class="ct-chart" id="websiteViewsChart"></div>
+          </div>
+          <div class="card-body">
+            <h4 class="card-title">Nombre de comptes par jour</h4>
+            <p class="card-category">Augmentation du nombre de comptes</p>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="material-icons">access_time</i> Mise à jour il y a 5 minutes
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-8 col-md-12">
+        <div class="card">
+          <div class="card-header card-header-warning">
+            <h4 class="card-title">Transactions récentes</h4>
+            <p class="card-category">Liste des transactions récentes</p>
+          </div>
+          <div class="card-body table-responsive">
+            <table class="table table-hover">
+              <thead class="text-warning">
+                <th>ID</th>
+                <th>Client</th>
+                <th>Montant</th>
+                <th>Date</th>
+              </thead>
+              <tbody>
+              <tr>
+                <td>1</td>
+                <td>Ousmane Gueye</td>
+                <td>5 000 Cfa </td>
+                <td>2021-07-01</td>
+              </tr>
+                <tr>
+                  <td>1</td>
+                  <td>Awa Niang</td>
+                  <td>15 000 Cfa</td>
+                  <td>2024-07-03</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Djiamila Sall</td>
+                  <td>25 000 Cfa</td>
+                  <td>2024-07-05</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>Fatou Casse</td>
+                  <td>30 000 Cfa</td>
+                  <td>2024-07-06</td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>Coumba Fall</td>
+                  <td>50 000 Cfa</td>
+                  <td>2024-07-10</td>
+                </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

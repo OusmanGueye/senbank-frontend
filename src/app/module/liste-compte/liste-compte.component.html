@@ -1,0 +1,160 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <button (click)="open(content)" class=" pull-right" mat-fab extended color="warn">
+          <mat-icon>add</mat-icon>
+          Ajouter Compte
+        </button>
+      </div>
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title ">Liste Des Comptes</h4>
+            <p class="card-category">Compte Active Dans Le Systeme</p>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead class=" text-primary">
+                <th>
+                  ID
+                </th>
+                <th>
+                  Numero Compte
+                </th>
+                <th>
+                  Client
+                </th>
+                <th>
+                  Solde
+                </th>
+                <th>
+                  Status
+                </th>
+                <th>
+                  Date Creation
+                </th>
+                <th >
+                  Action
+                </th>
+                </thead>
+                <tbody>
+                  @for (compte of  comptes; track  $index){
+                    <tr>
+                      <td>
+                        {{compte.id }}
+                      </td>
+                      <td>
+                        {{ compte.numero }}
+                      </td>
+                      <td>
+                        {{ compte.user.name | uppercase }}
+                      </td>
+                      <td>
+                        {{ compte.solde | currency }}
+                      </td>
+                      <td >
+                        {{ compte.etatCompte }}
+                      </td>
+                      <td>
+                        {{ compte.dateCreated | date:'d MMMM, y' }}
+                      </td>
+                      <td class="example-button-row">
+                        <button mat-fab extended color="accent">
+                          <mat-icon>visibility</mat-icon>
+                          details
+                        </button>
+                        <button (click)="open(content, compte)"  mat-fab extended color="primary">
+                          <mat-icon>attach_money</mat-icon>
+                          crediter
+                        </button>
+                      </td>
+                      }
+                </tbody>
+              </table>
+              <mat-paginator [length]="totalPages"
+                             [pageSize]="size"
+                             [pageIndex]="page"
+                             (page)="handlePaginationItemPerItemps($event)"
+                             [pageSizeOptions]="[3,5, 10, 25,50, 100]"
+                             aria-label="">
+              </mat-paginator>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{ titlte }}</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form class="form">
+      <div class="form-body" [formGroup]="compteForm">
+        <div class="row align-items-center">
+          <div class="col-12 form-group">
+            <label class="form-label">Client<span class="text-danger">*</span> </label>
+            <ng-select formControlName="userId" [items]="users" [multiple]="false" [closeOnSelect]="true"
+                       notFoundText="Aucun client trouvé"
+                       bindLabel="name" bindValue="id" [ngClass]="{
+                              'is-invalid':
+                                compteForm.get('userId')?.touched &&
+                                !compteForm.get('userId')?.valid
+                            }">
+            </ng-select>
+            <!--            <div class="invalid-feedback">-->
+            <!--                            <span *ngIf="compteForm.get('userId')?.hasError('required')">-->
+            <!--                              Selectionner un client-->
+            <!--                            </span>-->
+            <!--            </div>-->
+          </div>
+          <div class="col-12 form-group">
+            <label class="form-label">Type Compte<span class="text-danger">*</span> </label>
+            <ng-select formControlName="typeDeCompteId" [items]="typeComptes" [multiple]="false" [closeOnSelect]="true"
+                       notFoundText="Aucun type de compte trouvé"
+                       bindLabel="nom" bindValue="id" [ngClass]="{
+                              'is-invalid':
+                                compteForm.get('typeDeCompteId')?.touched &&
+                                !compteForm.get('typeDeCompteId')?.valid
+                            }">
+            </ng-select>
+            <!--            <div class="invalid-feedback">-->
+            <!--                            <span *ngIf="compteForm.get('typeDeCompteId')?.hasError('required')">-->
+            <!--                              Selectionner un type de compte-->
+            <!--                            </span>-->
+            <!--            </div>-->
+          </div>
+          <div class="col-12 form-group" >
+            <label class="form-label">Solde<span class="text-danger">*</span> </label>
+            <input formControlName="solde" type="number"  class="form-control"
+                   [ngClass]="{
+                              'is-invalid':
+                                compteForm.get('solde')?.touched &&
+                                !compteForm.get('solde')?.valid
+                            }"/>
+            <div class="invalid-feedback">
+                            <span *ngIf="compteForm.get('solde')?.hasError('required')">
+                              Entrez le solde du compte
+                            </span>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    @if (titlte === 'Ajouter un Compte')
+    {
+      <button type="button" class="btn btn-primary mx-50 bg-app-primary" (click)="modal.close('Save click')">Enregistrer</button>
+    } @else {
+      <button type="button" class="btn btn-primary mx-50 bg-app-primary" (click)="modal.close('Edit click')">Modifier</button>
+    }
+    <button type="button" class="btn btn-danger mx-50" (click)="modal.dismiss('Cancel click')">Annuler</button>
+  </div>
+</ng-template>

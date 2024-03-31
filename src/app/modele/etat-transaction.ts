@@ -1,0 +1,7 @@
+export enum EtatTransaction {
+  EN_ATTENTE = 'EN_ATTENTE',
+  ACCEPTEE = 'ACCEPTEE',
+  REJETEE = 'REJETEE',
+  ANNULEE = 'ANNULEE',
+  TERMINER = 'TERMINE'
+}

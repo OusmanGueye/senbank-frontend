@@ -1,0 +1,188 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <button (click)="open(content)" class=" pull-right" mat-fab extended color="warn">
+          <mat-icon>add</mat-icon>
+          Ajouter Type Compte
+        </button>
+      </div>
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title ">Liste Des Type Compte</h4>
+            <p class="card-category">Type Compte Dans Le Systeme</p>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead class=" text-primary">
+                <th>
+                  ID
+                </th>
+                <th>
+                  Numero
+                </th>
+                <th>
+                  Nom
+                </th>
+                <th>
+                  Taux Interet
+                </th>
+                <th>
+                  Frais Transaction
+                </th>
+                <th>
+                  prefixe
+                </th>
+                <th >
+                  Action
+                </th>
+                </thead>
+                <tbody>
+                  @for (typeCompte of  typeComptes; track  $index){
+                    <tr>
+                      <td>
+                        {{typeCompte.id }}
+                      </td>
+                      <td>
+                        {{ typeCompte.numero }}
+                      </td>
+                      <td>
+                        {{ typeCompte.nom | uppercase }}
+                      </td>
+                      <td>
+                        {{ typeCompte.tauxInteret }}
+                      </td>
+                      <td >
+                        {{ typeCompte.fraisTransaction }}
+                      </td>
+                      <td>
+                        {{ typeCompte.prefixe | uppercase}}
+                      </td>
+                      <td class="example-button-row">
+                        <button (click)="open(content, typeCompte)" mat-fab extended color="accent">
+                          <mat-icon>edit</mat-icon>
+                          modifier
+                        </button>
+                        <button mat-fab extended color="primary">
+                          <mat-icon>visibility</mat-icon>
+                          details
+                        </button>
+                      </td>
+                      }
+                </tbody>
+              </table>
+              <mat-paginator [length]="totalPages"
+                             [pageSize]="size"
+                             [pageIndex]="page"
+                             (page)="handlePaginationItemPerItemps($event)"
+                             [pageSizeOptions]="[3,5, 10, 25,50, 100]"
+                             aria-label="">
+              </mat-paginator>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{ title }}</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form class="form">
+      <div class="form-body" [formGroup]="typeCompteForm">
+        <div class="row align-items-center">
+          <div class="col-12 form-group" >
+            <label class="form-label">Nom<span class="text-danger">*</span> </label>
+            <input formControlName="nom"  type="text"  class="form-control"
+                   [ngClass]="{
+                              'is-invalid':
+                                typeCompteForm.get('nom')?.touched &&
+                                !typeCompteForm.get('nom')?.valid
+                            }"/>
+            <div class="invalid-feedback">
+                            <span *ngIf="typeCompteForm.get('nom')?.hasError('required')">
+                              Entrez le nom
+                            </span>
+
+            </div>
+          </div>
+          <div class="col-12 form-group" >
+            <label class="form-label">Frais Transaction<span class="text-danger">*</span> </label>
+            <input formControlName="fraisTransaction"  type="number"  class="form-control"
+                   [ngClass]="{
+                              'is-invalid':
+                                typeCompteForm.get('fraisTransaction')?.touched &&
+                                !typeCompteForm.get('fraisTransaction')?.valid
+                            }"/>
+            <div class="invalid-feedback">
+                            <span *ngIf="typeCompteForm.get('fraisTransaction')?.hasError('required')">
+                              Entrez le frais de transaction
+                            </span>
+
+            </div>
+          </div>
+          <div class="col-12 form-group" >
+            <label class="form-label">Frais Ouverture<span class="text-danger">*</span> </label>
+            <input formControlName="fraisOuverture" type="number"  class="form-control"
+                   [ngClass]="{
+                              'is-invalid':
+                                typeCompteForm.get('fraisOuverture')?.touched &&
+                                !typeCompteForm.get('fraisOuverture')?.valid
+                            }"/>
+            <div class="invalid-feedback">
+                            <span *ngIf="typeCompteForm.get('fraisOuverture')?.hasError('required')">
+                              Entrez le frais d'ouverture
+                            </span>
+
+            </div>
+          </div>
+          <div class="col-12 form-group" >
+            <label class="form-label">Taux Interet<span class="text-danger">*</span> </label>
+            <input formControlName="tauxInteret" type="number"  class="form-control"
+                   [ngClass]="{
+                              'is-invalid':
+                                typeCompteForm.get('tauxInteret')?.touched &&
+                                !typeCompteForm.get('tauxInteret')?.valid
+                            }"/>
+            <div class="invalid-feedback">
+                            <span *ngIf="typeCompteForm.get('tauxInteret')?.hasError('required')">
+                              Entrez le taux d'interet
+                            </span>
+
+            </div>
+          </div>
+            <div class="col-12 form-group" >
+              <label class="form-label">Prefixe<span class="text-danger">*</span> </label>
+              <input formControlName="prefixe" type="text"  class="form-control"
+                     [ngClass]="{
+                              'is-invalid':
+                                typeCompteForm.get('prefixe')?.touched &&
+                                !typeCompteForm.get('prefixe')?.valid
+                            }"/>
+              <div class="invalid-feedback">
+                            <span *ngIf="typeCompteForm.get('prefixe')?.hasError('required')">
+                              Entrez le prefixe
+                            </span>
+
+              </div>
+            </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    @if (title === 'Ajouter Type Compte')
+    {
+      <button type="button" class="btn btn-primary mx-50 bg-app-primary" (click)="modal.close('Save click')">Enregistrer</button>
+    } @else {
+      <button type="button" class="btn btn-primary mx-50 bg-app-primary" (click)="modal.close('Edit click')">Modifier</button>
+    }
+    <button type="button" class="btn btn-danger mx-50" (click)="modal.dismiss('Cancel click')">Annuler</button>
+  </div>
+</ng-template>
